@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import urllib
+import socket
 import csv
 import pprint
 import datetime
@@ -80,8 +81,11 @@ def get_data(page=1):
     query = default_query.copy()
     query['pageNo'] = page
 
-    document = request(url, query=query)
-    #document = file('example.xml').read()
+    try :
+        document = request(url, query=query)
+    except socket.error:
+        return None
+
     if document is None:
         return None
 
